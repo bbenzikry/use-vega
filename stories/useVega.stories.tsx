@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import defaultSpec from '../samples/vegaLiteSampleSpec'
 import vegaSpec from '../samples/vegaSampleSpec'
 import ExampleChart from './ExampleChart'
 import { withKnobs, object, knob } from '@storybook/addon-knobs'
 import { useVega } from '../src/useVega'
+import vegaDataSample from '../samples/vegaDataSample'
+import { GrammerType } from '../src/enums/GrammerType'
 export default {
   title: 'use-vega',
   // If we do not disable it, filters / transforms on the vega spec have html entities.
@@ -48,9 +50,33 @@ export const NoDataStory = () => {
 }
 
 export const InvalidSpecStory = () => {
-  const value = object('spec', {})
+  const value = object('spec', {...defaultSpec, mark: undefined})
   //@ts-ignore
   const { noData, isLoading, ref, isError } = useVega(value)
+  return (
+    <div>
+      <div ref={ref} />
+      {isLoading && <div>Loading...</div>}
+      {!isLoading && noData && <div>No data found</div>}
+      {isError && <div>Encountered an error while rendering spec</div>}
+    </div>
+  )
+}
+
+const getSomeData = async ()=>{
+  await new Promise(_=>setTimeout(_, 2000))
+  return vegaDataSample
+}
+
+export const FetchStory =  () => {
+  const value = object('spec', {...defaultSpec, data: []})
+  const { noData, isLoading, ref, isError, updateView } = useVega(value)
+  useEffect(()=>{
+    ;(async()=>{
+      const someData = await getSomeData()
+      updateView({...defaultSpec, data: {values: someData}})
+    })()
+  })
   return (
     <div>
       <div ref={ref} />
@@ -63,8 +89,7 @@ export const InvalidSpecStory = () => {
 
 export const WithVegaNonLite = () => {
   const value = object('spec', vegaSpec)
-  //@ts-ignore
-  const { noData, isLoading, ref, isError } = useVega(value)
+  const { noData, isLoading, ref, isError } = useVega(value, {grammer: GrammerType.VEGA})
   return (
     <div>
       <div ref={ref} />
@@ -75,26 +100,10 @@ export const WithVegaNonLite = () => {
   )
 }
 
-WithVegaNonLite.story = {
-  name: 'Vega: pie'
-}
-
-UseVegaStory.story = {
-  name: 'Vega lite: Simple area chart'
-}
-
-UseVegaTooltipStory.story = {
-  name: 'Vega lite: Line with point tooltips'
-}
-
-WithLoadingStory.story = {
-  name: 'With loading component'
-}
-
-NoDataStory.story = {
-  name: 'With no data provided'
-}
-
-InvalidSpecStory.story = {
-  name: 'Malformed spec'
-}
+WithVegaNonLite.storyName = 'Vega: pie'
+UseVegaStory.storyName = 'Vega lite: Simple area chart'
+UseVegaTooltipStory.storyName = 'Vega lite: Line with point tooltips'
+WithLoadingStory.storyName = 'With loading component'
+NoDataStory.storyName = 'With no data provided'
+InvalidSpecStory.storyName = 'Malformed spec'
+FetchStory.story = 'Fetch example'

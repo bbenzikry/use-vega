@@ -1,9 +1,11 @@
 import { useRef, useEffect, useCallback, useState } from 'react'
 import { TopLevelSpec } from 'vega-lite'
-import { View } from 'vega'
+import { Spec, UrlData, View } from 'vega'
 import { updateVegaView, ViewOptions } from './helpers/view'
 import useRefState from './hooks/useRefState'
 import warning from 'tiny-warning'
+import { InlineData, NamedData } from 'vega-lite/build/src/data'
+import { GrammerType } from './enums/GrammerType'
 // import useForceUpdate from './hooks/useForceUpdate'
 
 const isView = (view: View | null | undefined): view is View => {
@@ -13,13 +15,15 @@ const safeUpdateView = (
   visualization: React.MutableRefObject<View | null | undefined>,
   ref: React.MutableRefObject<HTMLDivElement | null>,
   spec: TopLevelSpec, 
-  opts: ViewOptions = {}
+  opts: ViewOptions = {}, 
+  grammer?: GrammerType
 ) => {
   let view: View | undefined = undefined
   try {
-    view = updateVegaView(ref, spec, opts)
+    view = updateVegaView(ref, spec, opts, grammer)
   } catch (err) {
     warning(true, err)
+    return false
   }
   if (isView(view)) {
     visualization.current = view
@@ -29,7 +33,14 @@ const safeUpdateView = (
 }
 
 export interface UseVegaOptions {
-  overrides?: ViewOptions
+  overrides?: ViewOptions, 
+  grammer?: GrammerType
+}
+
+const validateData = (spec : Spec | TopLevelSpec)=>{
+  return !!(spec.data && (spec.data as UrlData).url ||
+    (!Array.isArray(spec?.data) && (spec?.data as InlineData).values) || 
+    (Array.isArray(spec?.data) && spec?.data.length > 0 && (spec?.data[0] as NamedData).name))
 }
 export const useVega = (initialSpec: TopLevelSpec, opts?: UseVegaOptions) => {
   const [vegaWrapperRef, setWrapperRef] = useRefState<HTMLDivElement | null>(
@@ -50,14 +61,11 @@ export const useVega = (initialSpec: TopLevelSpec, opts?: UseVegaOptions) => {
         visualization.current.finalize()
         visualization.current = null
       }
-      const isValid =
-        spec.data &&
-        (spec.data.url ||
-          (spec?.data?.values && spec?.data?.values?.length > 0))
+      const isValid = validateData(spec)
       if (!isValid) {
         setNoData(true)
       } else {
-        const error = !safeUpdateView(visualization, vegaWrapperRef, spec, opts ? opts.overrides : {})
+        const error = !safeUpdateView(visualization, vegaWrapperRef, spec, opts ? opts.overrides : {}, opts?.grammer || GrammerType.VEGA_LITE)
         if (!error) {
           setNoData(false)
         } else {
@@ -66,7 +74,7 @@ export const useVega = (initialSpec: TopLevelSpec, opts?: UseVegaOptions) => {
       }
       setLoading(false)
     },
-    [noData, setLoading, vegaWrapperRef]
+    [setLoading, vegaWrapperRef]
   )
 
   const updateContainer = useCallback(

@@ -18,7 +18,6 @@ describe('when rendered with a simple spec', () => {
 
 describe('when rendered with a malformed spec', () => {
   it('identifies an error', async () => {
-    //@ts-ignore
     const { result } = renderHook(() => useVega({...defaultSpec, mark: undefined}))
     act(() => {
       const element = document.createElement('div')
