@@ -23,13 +23,13 @@ const safeUpdateView = (
     view = updateVegaView(ref, spec, opts, grammer)
   } catch (err) {
     warning(true, err)
-    return false
+    return err
   }
   if (isView(view)) {
     visualization.current = view
-    return true
+    return false
   }
-  return false
+  return new Error('Could not load view')
 }
 
 export interface UseVegaOptions {
@@ -58,7 +58,7 @@ export const useVega = (
   // const forceUpdate = useForceUpdate()
   const [isLoading, setLoading] = useRefState(true)
   const [noData, setNoData] = useRefState(false)
-  const [isError, setError] = useState(false)
+  const [error, setError] = useState(null)
   const updateView = useCallback(
     (spec) => {
       if (!vegaWrapperRef) {
@@ -72,7 +72,7 @@ export const useVega = (
       if (!isValid) {
         setNoData(true)
       } else {
-        const error = !safeUpdateView(
+        const error = safeUpdateView(
           visualization,
           vegaWrapperRef,
           spec,
@@ -81,8 +81,9 @@ export const useVega = (
         )
         if (!error) {
           setNoData(false)
+          setError(null)
         } else {
-          setError(true)
+          setError(error)
         }
       }
       setLoading(false)
@@ -118,7 +119,7 @@ export const useVega = (
     updateView,
     isLoading: isLoading.current,
     noData: noData.current,
-    isError,
+    error,
     updateContainer,
   }
 }

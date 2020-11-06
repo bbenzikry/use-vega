@@ -53,25 +53,25 @@ export const NoDataStory = () => {
 export const InvalidSpecStory = () => {
   const value = object('spec', { ...defaultSpec, mark: undefined })
   //@ts-ignore
-  const { noData, isLoading, ref, isError } = useVega(value)
+  const { noData, isLoading, ref, error } = useVega(value)
   return (
     <div>
       <div ref={ref} />
       {isLoading && <div>Loading...</div>}
       {!isLoading && noData && <div>No data found</div>}
-      {isError && <div>Encountered an error while rendering spec</div>}
+      {error && <div>Encountered an error while rendering spec</div>}
     </div>
   )
 }
 
 const getSomeData = async () => {
-  await new Promise(_ => setTimeout(_, 2000))
+  await new Promise((_) => setTimeout(_, 2000))
   return vegaDataSample
 }
 
 export const FetchStory = () => {
   const value = object('spec', { ...defaultSpec, data: [] })
-  const { noData, isLoading, ref, isError, updateView } = useVega(value)
+  const { noData, isLoading, ref, error, updateView } = useVega(value)
   useEffect(() => {
     ;(async () => {
       const someData = await getSomeData()
@@ -83,14 +83,15 @@ export const FetchStory = () => {
       <div ref={ref} />
       {isLoading && <div>Loading...</div>}
       {!isLoading && noData && <div>No data found</div>}
-      {isError && <div>Encountered an error while rendering spec</div>}
+      {error && <div>Encountered an error while rendering spec</div>}
+      {error && <div>{error}</div>}
     </div>
   )
 }
 
 export const WithVegaNonLite = () => {
   const value = object('spec', vegaSpec)
-  const { noData, isLoading, ref, isError } = useVega(value, {
+  const { noData, isLoading, ref, error } = useVega(value, {
     grammer: GrammerType.VEGA,
   })
   return (
@@ -98,7 +99,7 @@ export const WithVegaNonLite = () => {
       <div ref={ref} />
       {isLoading && <div>Loading...</div>}
       {!isLoading && noData && <div>No data found</div>}
-      {isError && <div>Encountered an error while rendering spec</div>}
+      {error && <div>Encountered an error while rendering spec</div>}
     </div>
   )
 }

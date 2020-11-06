@@ -27,7 +27,7 @@ describe('when rendered with a malformed spec', () => {
       const element = document.createElement('div')
       result.current.updateContainer(element)
     })
-    expect(result.current.isError).toBeTruthy()
+    expect(result.current.error).toBeTruthy()
   })
 })
 

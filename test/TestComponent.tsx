@@ -6,13 +6,13 @@ interface TestComponentProps {
   // handleLoad?: boolean
 }
 export default ({ spec }: TestComponentProps) => {
-  const { ref, noData, isLoading, isError } = useVega(spec)
+  const { ref, noData, isLoading, error } = useVega(spec)
   return (
     <>
       <div ref={ref} />
       {noData && <>{'no data'}</>}
       {isLoading && <>{'loading'}</>}
-      {isError && <>{'error'}</>}
+      {error && <>{'error'}</>}
     </>
   )
 }

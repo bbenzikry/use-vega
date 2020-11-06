@@ -7,8 +7,7 @@ import { useVega } from '../.'
 import spec from '../samples/vegaLiteSampleSpec'
 
 const App = () => {
-  const { ref, isError, isLoading, noData,updateView,view } = useVega({...spec}, {})
-  // const { ref, isError, isLoading, noData } = useVega({...spec, mark: undefined}, {})
+  const { ref, error, isLoading, noData,updateView,view } = useVega({...spec}, {})
   const renderCount = React.useRef(0)
   useEffect(() => {
     renderCount.current += 1
@@ -17,7 +16,7 @@ const App = () => {
   return (
     <div>
       <div ref={ref} />
-      {isError && <div>error</div>}
+      {error && <div>error</div>}
       {noData && <div>no data</div>}
       {isLoading && <div>isloading</div>}
     <button onClick={()=>{
