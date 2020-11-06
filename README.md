@@ -1,4 +1,4 @@
-<img style="max-width:250px;" src="./hooks-vega.png">
+<img width='250px' src="./hooks-vega.png">
 <h1 align="center">useVega ⚛</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
@@ -12,20 +12,31 @@
 
 > Simple react hook for rendering Vega/Vega lite specifications
 
-### ✨ [Demo](https://usevega.dev)
+### ✨ [Demo](https://bbenzikry.github.io/use-vega)
 
 ## Install
 
 ```sh
-yarn install @bbenzikry/useVega
+yarn install @bbenzikry/use-vega
 ```
 
 ## Usage
 
-```typescript
+```tsx
+import {useVega} from '@bbenzikry/use-vega'
+const spec = /* some vega / vega lite spec here*/;
+const SomeChart = () => {
+const { ref, noData, isLoading, error } = useVega(spec)
+return (
+  <>
+    <div ref={ref} />
+    {noData && <>{'no data'}</>}
+    {isLoading && <>{'loading'}</>}
+    {error && <>{'error'}</>}
+  </>
+  )
+}
 ```
-
-## Storybook
 
 ## Author
 
