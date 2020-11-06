@@ -1,4 +1,7 @@
-<h1 align="center">Welcome to useVega 👋</h1>
+<!-- <h1 align="center">useVega 👋</h1> -->
+<center>
+<img style="max-width:400px" src="./hooks-vega.png">
+</center>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
