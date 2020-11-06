@@ -1,0 +1,13 @@
+{
+ "files.associations": {
+   ".prettierrc": "yaml"
+ },
+"eslint.validate": [
+  "typescript", 
+  "typescriptreact"
+], 
+"editor.codeActionsOnSave": {
+  "source.fixAll.eslint":true
+},
+"jest.pathToJest": "yarn run test --"
+}

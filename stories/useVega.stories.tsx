@@ -2,14 +2,15 @@ import React, { useEffect } from 'react'
 import defaultSpec from '../samples/vegaLiteSampleSpec'
 import vegaSpec from '../samples/vegaSampleSpec'
 import ExampleChart from './ExampleChart'
-import { withKnobs, object, knob } from '@storybook/addon-knobs'
+import { withKnobs, object } from '@storybook/addon-knobs'
 import { useVega } from '../src/useVega'
 import vegaDataSample from '../samples/vegaDataSample'
 import { GrammerType } from '../src/enums/GrammerType'
+import { TopLevelSpec } from 'vega-lite'
 export default {
   title: 'use-vega',
   // If we do not disable it, filters / transforms on the vega spec have html entities.
-  decorators: [withKnobs({ escapeHTML: false })]
+  decorators: [withKnobs({ escapeHTML: false })],
 }
 
 export const UseVegaStory = () => {
@@ -20,8 +21,8 @@ export const UseVegaStory = () => {
 export const UseVegaTooltipStory = () => {
   const value = object('spec', {
     ...defaultSpec,
-    mark: { type: 'line', tooltip: true, point: true }
-  })
+    mark: { type: 'line', tooltip: true, point: true },
+  } as TopLevelSpec)
   return <ExampleChart spec={value} />
 }
 
@@ -50,7 +51,7 @@ export const NoDataStory = () => {
 }
 
 export const InvalidSpecStory = () => {
-  const value = object('spec', {...defaultSpec, mark: undefined})
+  const value = object('spec', { ...defaultSpec, mark: undefined })
   //@ts-ignore
   const { noData, isLoading, ref, isError } = useVega(value)
   return (
@@ -63,18 +64,18 @@ export const InvalidSpecStory = () => {
   )
 }
 
-const getSomeData = async ()=>{
-  await new Promise(_=>setTimeout(_, 2000))
+const getSomeData = async () => {
+  await new Promise(_ => setTimeout(_, 2000))
   return vegaDataSample
 }
 
-export const FetchStory =  () => {
-  const value = object('spec', {...defaultSpec, data: []})
+export const FetchStory = () => {
+  const value = object('spec', { ...defaultSpec, data: [] })
   const { noData, isLoading, ref, isError, updateView } = useVega(value)
-  useEffect(()=>{
-    ;(async()=>{
+  useEffect(() => {
+    ;(async () => {
       const someData = await getSomeData()
-      updateView({...defaultSpec, data: {values: someData}})
+      updateView({ ...defaultSpec, data: { values: someData } })
     })()
   })
   return (
@@ -89,7 +90,9 @@ export const FetchStory =  () => {
 
 export const WithVegaNonLite = () => {
   const value = object('spec', vegaSpec)
-  const { noData, isLoading, ref, isError } = useVega(value, {grammer: GrammerType.VEGA})
+  const { noData, isLoading, ref, isError } = useVega(value, {
+    grammer: GrammerType.VEGA,
+  })
   return (
     <div>
       <div ref={ref} />

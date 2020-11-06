@@ -1,4 +1,4 @@
 export enum GrammerType {
   VEGA = 'vega',
-  VEGA_LITE = 'vega-lite'
+  VEGA_LITE = 'vega-lite',
 }

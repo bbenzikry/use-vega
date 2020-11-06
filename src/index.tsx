@@ -1,1 +1,1 @@
-export { useVega } from './useVega';
+export { useVega } from './useVega'

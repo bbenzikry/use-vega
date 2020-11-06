@@ -4,6 +4,7 @@ import { renderHook, act } from '@testing-library/react-hooks'
 import { useVega } from '../src/useVega'
 import defaultSpec from '../samples/vegaLiteSampleSpec'
 import TestComponent from './TestComponent'
+
 describe('when rendered with a simple spec', () => {
   it('renders vega canvas', async () => {
     const { container } = render(
@@ -18,7 +19,10 @@ describe('when rendered with a simple spec', () => {
 
 describe('when rendered with a malformed spec', () => {
   it('identifies an error', async () => {
-    const { result } = renderHook(() => useVega({...defaultSpec, mark: undefined}))
+    const { result } = renderHook(() =>
+      // @ts-ignore
+      useVega({ ...defaultSpec, mark: undefined })
+    )
     act(() => {
       const element = document.createElement('div')
       result.current.updateContainer(element)
@@ -31,7 +35,7 @@ describe('when spec is well formed', () => {
   describe('When data is provided', () => {
     it('returns noData = false', async () => {
       const {
-        result
+        result,
         //@ts-ignore
       } = renderHook(() => useVega(defaultSpec))
       act(() => {
@@ -44,7 +48,7 @@ describe('when spec is well formed', () => {
   describe('When no data is provided', () => {
     it('returns noData = true', async () => {
       const {
-        result
+        result,
         //@ts-ignore
       } = renderHook(() => useVega({ ...defaultSpec, data: [] }))
       act(() => {

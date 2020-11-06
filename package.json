@@ -20,7 +20,8 @@
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "deploy-storybook": "storybook-to-ghpages"
+    "deploy-storybook": "storybook-to-ghpages",
+    "postinstall": "patch-package"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -36,7 +37,7 @@
   },
   "prettier": {
     "printWidth": 80,
-    "semi": true,
+    "semi": false,
     "singleQuote": true,
     "trailingComma": "es5"
   },
@@ -73,9 +74,22 @@
     "@types/jsdom": "16.2.5",
     "@types/react": "^16.9.55",
     "@types/react-dom": "^16.9.9",
+    "@typescript-eslint/eslint-plugin": "4.6.1",
+    "@typescript-eslint/parser": "4.6.1",
     "babel-loader": "^8.1.0",
+    "eslint": "7.10.0",
+    "eslint-config-prettier": "6.12.0",
+    "eslint-plugin-jest": "24.0.2",
+    "eslint-plugin-jest-dom": "3.2.3",
+    "eslint-plugin-prettier": "3.1.4",
+    "prettier": "2.1.2",
+    "eslint-plugin-react": "7.21.5",
+    "eslint-plugin-react-hooks": "4.2.0",
     "husky": "^4.3.0",
+    "jest": "26.4.2",
     "jest-canvas-mock": "^2.3.0",
+    "patch-package": "^6.2.2",
+    "postinstall-postinstall": "^2.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-is": "^17.0.1",
@@ -84,11 +98,20 @@
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
     "tsdx": "^0.14.1",
-    "tslib": "^2.0.3",
+    "tslib": "2.0.3",
     "typescript": "^4.0.5",
     "vega": "5.17.0",
     "vega-embed": "6.13.0",
     "vega-lite": "4.17.0",
     "vega-tooltip": "0.24.2"
+  },
+  "resolutions": {
+    "eslint": "7.10.0",
+    "typescript": "^4.0.5",
+    "tslib": "2.0.3",
+    "@typescript-eslint/eslint-plugin": "4.6.1",
+    "@typescript-eslint/parser": "4.6.1",
+    "eslint-plugin-prettier": "3.1.4",
+    "prettier": "2.1.2"
   }
 }

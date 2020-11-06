@@ -1,22 +1,18 @@
-import * as React from 'react';
-import { useVega } from '../';
-import { useEffect } from 'react';
-import { TopLevelSpec } from 'vega-lite/src/spec';
-import defaultSpec from '../samples/vegaLiteSampleSpec';
+import * as React from 'react'
+import { useVega } from '../'
+import { useEffect } from 'react'
+import { TopLevelSpec } from 'vega-lite/src/spec'
+import { Spec } from 'vega'
 
 interface ExampleChartProps {
-  spec: TopLevelSpec;
+  spec: TopLevelSpec | Spec
 }
 const ExampleChart = ({ spec }: ExampleChartProps) => {
-  const { ref, updateView } = useVega(spec);
+  const { ref, updateView } = useVega(spec)
   useEffect(() => {
-    updateView(spec);
-  }, [spec, updateView]);
-  return <div ref={ref} />;
-};
+    updateView(spec)
+  }, [spec, updateView])
+  return <div ref={ref} />
+}
 
-const what = () => {
-  return <ExampleChart spec={defaultSpec} />;
-};
-
-export default ExampleChart;
+export default ExampleChart

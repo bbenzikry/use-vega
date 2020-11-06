@@ -17,8 +17,12 @@ const DEFAULT_OPTIONS: ViewOptions = {
 
 export type ViewOptions = ConstructorParameters<typeof View>[1]
 
-export const updateVegaView = (viewReference: MutableRefObject<HTMLDivElement | null>, vlSpec?: TopLevelSpec,
-  /*vegaSpec?: Spec, vegaConfig: Config = {},*/ overrideOptions: ViewOptions = {}, grammer: GrammerType = GrammerType.VEGA_LITE) => {
+export const updateVegaView = (
+  viewReference: MutableRefObject<HTMLDivElement | null>,
+  vlSpec?: TopLevelSpec,
+  /*vegaSpec?: Spec, vegaConfig: Config = {},*/ overrideOptions: ViewOptions = {},
+  grammer: GrammerType = GrammerType.VEGA_LITE
+) => {
   if (!viewReference || !viewReference.current || !vlSpec) return
   const opts: ViewOptions = {
     ...DEFAULT_OPTIONS,
@@ -27,7 +31,8 @@ export const updateVegaView = (viewReference: MutableRefObject<HTMLDivElement | 
   }
   // vegaParse()
   // const spec = vlSpec ? vlCompile(vlSpec).spec : vegaSpec
-  const spec = grammer === GrammerType.VEGA_LITE ? vlCompile(vlSpec).spec : vlSpec
+  const spec =
+    grammer === GrammerType.VEGA_LITE ? vlCompile(vlSpec).spec : vlSpec
   // invariant(!spec, 'Vega lite or vega spec must be defined')
   // const config = vlSpec ? vlSpec.config : vegaConfig
   // @ts-ignore

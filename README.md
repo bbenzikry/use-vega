@@ -1,4 +1,4 @@
-<img align="center" style="max-width:250px;" src="./hooks-vega.png">
+<img style="max-width:250px;" src="./hooks-vega.png">
 <h1 align="center">useVega ⚛</h1>
 <p>
   <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
@@ -17,20 +17,15 @@
 ## Install
 
 ```sh
-yarn install
+yarn install @bbenzikry/useVega
 ```
 
 ## Usage
 
-```sh
-yarn run start
+```typescript
 ```
 
-## Run tests
-
-```sh
-yarn run test
-```
+## Storybook
 
 ## Author
 
@@ -42,6 +37,3 @@ yarn run test
 ## Show your support
 
 Give a ⭐️ if this project helped you!
-
-***
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_

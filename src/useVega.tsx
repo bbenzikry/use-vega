@@ -14,8 +14,8 @@ const isView = (view: View | null | undefined): view is View => {
 const safeUpdateView = (
   visualization: React.MutableRefObject<View | null | undefined>,
   ref: React.MutableRefObject<HTMLDivElement | null>,
-  spec: TopLevelSpec, 
-  opts: ViewOptions = {}, 
+  spec: TopLevelSpec,
+  opts: ViewOptions = {},
   grammer?: GrammerType
 ) => {
   let view: View | undefined = undefined
@@ -33,16 +33,23 @@ const safeUpdateView = (
 }
 
 export interface UseVegaOptions {
-  overrides?: ViewOptions, 
+  overrides?: ViewOptions
   grammer?: GrammerType
 }
 
-const validateData = (spec : Spec | TopLevelSpec)=>{
-  return !!(spec.data && (spec.data as UrlData).url ||
-    (!Array.isArray(spec?.data) && (spec?.data as InlineData).values) || 
-    (Array.isArray(spec?.data) && spec?.data.length > 0 && (spec?.data[0] as NamedData).name))
+const validateData = (spec: Spec | TopLevelSpec) => {
+  return !!(
+    (spec.data && (spec.data as UrlData).url) ||
+    (!Array.isArray(spec?.data) && (spec?.data as InlineData).values) ||
+    (Array.isArray(spec?.data) &&
+      spec?.data.length > 0 &&
+      (spec?.data[0] as NamedData).name)
+  )
 }
-export const useVega = (initialSpec: TopLevelSpec, opts?: UseVegaOptions) => {
+export const useVega = (
+  initialSpec: TopLevelSpec | Spec,
+  opts?: UseVegaOptions
+) => {
   const [vegaWrapperRef, setWrapperRef] = useRefState<HTMLDivElement | null>(
     null
   )
@@ -65,7 +72,13 @@ export const useVega = (initialSpec: TopLevelSpec, opts?: UseVegaOptions) => {
       if (!isValid) {
         setNoData(true)
       } else {
-        const error = !safeUpdateView(visualization, vegaWrapperRef, spec, opts ? opts.overrides : {}, opts?.grammer || GrammerType.VEGA_LITE)
+        const error = !safeUpdateView(
+          visualization,
+          vegaWrapperRef,
+          spec,
+          opts ? opts.overrides : {},
+          opts?.grammer || GrammerType.VEGA_LITE
+        )
         if (!error) {
           setNoData(false)
         } else {
@@ -74,7 +87,7 @@ export const useVega = (initialSpec: TopLevelSpec, opts?: UseVegaOptions) => {
       }
       setLoading(false)
     },
-    [setLoading, vegaWrapperRef]
+    [setLoading, vegaWrapperRef, opts, setNoData]
   )
 
   const updateContainer = useCallback(
@@ -97,7 +110,7 @@ export const useVega = (initialSpec: TopLevelSpec, opts?: UseVegaOptions) => {
         visualization.current.finalize()
       }
     }
-  }, [vegaWrapperRef.current])
+  }, [vegaWrapperRef, initialSpec, updateView])
 
   return {
     ref: vegaWrapperRef,
@@ -106,6 +119,6 @@ export const useVega = (initialSpec: TopLevelSpec, opts?: UseVegaOptions) => {
     isLoading: isLoading.current,
     noData: noData.current,
     isError,
-    updateContainer
+    updateContainer,
   }
 }
