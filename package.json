@@ -19,7 +19,7 @@
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "build-storybook": "build-storybook --no-dll",
     "deploy-storybook": "storybook-to-ghpages",
     "postinstall": "patch-package"
   },
