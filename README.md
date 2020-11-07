@@ -50,13 +50,6 @@ The implementation is less performant than the one in [react-vega](https://githu
 This will change in a future version dependent on traction.  
 Feel free to PR if this bothers you 😁
 
-## Author
-
-👤 **Beni Ben Zikry**
-
-* Twitter: [@bbenzikry](https://twitter.com/bbenzikry)
-* Github: [@bbenzikry](https://github.com/bbenzikry)
-
 ## Show your support
 
 Give a ⭐️ if this project helped you!
