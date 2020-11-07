@@ -1,0 +1,1 @@
+export { useVega } from './useVega'
