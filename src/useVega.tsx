@@ -6,6 +6,8 @@ import useRefState from './hooks/useRefState'
 import warning from 'tiny-warning'
 import { InlineData, NamedData } from 'vega-lite/build/src/data'
 import { GrammerType } from './enums/GrammerType'
+import { PlainObject, SignalListeners } from './types'
+import shallowEqual from './utils/shallowEqual'
 // import useForceUpdate from './hooks/useForceUpdate'
 
 const isView = (view: View | null | undefined): view is View => {
@@ -48,14 +50,14 @@ const validateData = (spec: Spec | TopLevelSpec) => {
 }
 export const useVega = (
   initialSpec: TopLevelSpec | Spec,
-  opts?: UseVegaOptions
+  opts?: UseVegaOptions,
+  signalListeners?: SignalListeners
 ) => {
   const [vegaWrapperRef, setWrapperRef] = useRefState<HTMLDivElement | null>(
     null
   )
   const currentSpec = useRef(initialSpec)
   const visualization = useRef<View | undefined | null>(null)
-  // const forceUpdate = useForceUpdate()
   const [isLoading, setLoading] = useRefState(true)
   const [noData, setNoData] = useRefState(false)
   const [error, setError] = useState(null)
@@ -64,6 +66,13 @@ export const useVega = (
       if (!vegaWrapperRef) {
         return
       }
+      if (
+        !isLoading.current &&
+        shallowEqual(spec, currentSpec.current as PlainObject)
+      ) {
+        return
+      }
+      currentSpec.current = spec
       if (visualization.current) {
         visualization.current.finalize()
         visualization.current = null
@@ -88,7 +97,7 @@ export const useVega = (
       }
       setLoading(false)
     },
-    [setLoading, vegaWrapperRef, opts, setNoData]
+    [setLoading, opts, setNoData]
   )
 
   const updateContainer = useCallback(
@@ -105,13 +114,37 @@ export const useVega = (
     if (!vegaWrapperRef.current) {
       return
     }
-    updateView(currentSpec.current || initialSpec)
+    updateView(initialSpec)
     return () => {
       if (visualization.current) {
         visualization.current.finalize()
       }
     }
-  }, [vegaWrapperRef, initialSpec, updateView])
+  }, [initialSpec, updateView])
+
+  useEffect(() => {
+    const currentListeners = signalListeners
+    if (!currentListeners) {
+      return
+    }
+    const viz = visualization.current
+    if (!viz) {
+      return
+    }
+    const listenerNames = Object.keys(currentListeners)
+    listenerNames.forEach((listenerName) => {
+      viz.addSignalListener(listenerName, currentListeners[listenerName])
+    })
+    return () => {
+      listenerNames.forEach((listenerName) => {
+        try {
+          viz.removeSignalListener(listenerName, currentListeners[listenerName])
+        } catch (error) {
+          console.warn('Cannot remove invalid signal listener.', error)
+        }
+      })
+    }
+  }, [signalListeners])
 
   return {
     ref: vegaWrapperRef,

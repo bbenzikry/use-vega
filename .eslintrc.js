@@ -15,7 +15,8 @@ module.exports = {
     project: path.resolve(__dirname, './tsconfig.eslint.json')
   },
   rules: {
-    "react/display-name": "off"
+    "react/display-name": "off", 
+    "react/prop-types":"off"
   },
   settings: {
     "react": {

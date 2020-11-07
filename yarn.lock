@@ -1825,6 +1825,13 @@
     react "^16.8.3"
     regenerator-runtime "^0.13.3"
 
+"@storybook/addon-console@1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@storybook/addon-console/-/addon-console-1.2.2.tgz#018cd712e1ed6eee1a7eae57c3d96f1fbbedc191"
+  integrity sha512-aTuYoz1Fit9PAhy0VDTjQ5rovRz5a+DgPRIaA5cktkiA9Y0ikK/cu525DDZLTh7oNMOt0fmRYyYPtknTMyeXrQ==
+  dependencies:
+    global "^4.3.2"
+
 "@storybook/addon-controls@6.0.28":
   version "6.0.28"
   resolved "https://registry.yarnpkg.com/@storybook/addon-controls/-/addon-controls-6.0.28.tgz#5872ede3d33b103c0b519304dedde1000b8c68f0"

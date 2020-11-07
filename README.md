@@ -14,10 +14,16 @@
 
 ### ✨ [Demo](https://bbenzikry.github.io/use-vega)
 
+## Prerequisites
+
+use-vega requires [vega]() and [vega-lite]()
+
 ## Install
 
 ```sh
-yarn install @bbenzikry/use-vega
+yarn add --production use-vega
+# OR
+npm install use-vega
 ```
 
 ## Usage
@@ -37,6 +43,12 @@ return (
   )
 }
 ```
+
+## Notes and FAQ
+
+* The implementation is less performant than the one in [react-vega](https://github.com/vega/react-vega) as we recreate the view on change instead of doing a more in-depth comparison / update changesets.
+This will be changed in a future version dependent on traction.
+Feel free to PR if this bothers you 😁
 
 ## Author
 

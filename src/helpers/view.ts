@@ -29,12 +29,8 @@ export const updateVegaView = (
     ...overrideOptions,
     container: viewReference.current,
   }
-  // vegaParse()
-  // const spec = vlSpec ? vlCompile(vlSpec).spec : vegaSpec
   const spec =
     grammer === GrammerType.VEGA_LITE ? vlCompile(vlSpec).spec : vlSpec
-  // invariant(!spec, 'Vega lite or vega spec must be defined')
-  // const config = vlSpec ? vlSpec.config : vegaConfig
   // @ts-ignore
   const runtime = vegaParse(spec, vlSpec.config as Config)
   const view = new View(runtime, opts)

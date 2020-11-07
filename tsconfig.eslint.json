@@ -1,5 +1,5 @@
 {
-  "include": ["src", "types", "test", "example", "stories"],
+  "include": ["src", "types", "test", "example", "stories", "samples"],
   "compilerOptions": {
     "allowJs": true,
     "module": "esnext",
