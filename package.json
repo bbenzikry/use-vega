@@ -2,6 +2,17 @@
   "version": "0.1.0",
   "license": "MIT",
   "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bbenzikry/use-vega.git"
+  },
+  "homepage": "https://github.com/bbenzikry/use-vega",
+  "keywords": [
+    "react",
+    "vega",
+    "vega-lite",
+    "charts"
+  ],
   "typings": "dist/useVega.d.ts",
   "files": [
     "dist",
@@ -15,13 +26,12 @@
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "prepare": "patch-package && tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook --no-dll",
-    "deploy-storybook": "storybook-to-ghpages",
-    "postinstall": "patch-package"
+    "deploy-storybook": "storybook-to-ghpages"
   },
   "peerDependencies": {
     "react": ">=16",
