@@ -1,7 +1,7 @@
 <img width='350px' src="https://user-images.githubusercontent.com/1993348/98430757-6fff3680-20b8-11eb-9b31-617f6d27b1fa.png">
 <h1 align="center">useVega ⚛</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.3.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.4.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
