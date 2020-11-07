@@ -1,7 +1,7 @@
-<img width='350px' src="./hooks-vega.png">
+<img width='350px' src="https://user-images.githubusercontent.com/1993348/98430757-6fff3680-20b8-11eb-9b31-617f6d27b1fa.png">
 <h1 align="center">useVega ⚛</h1>
 <p>
-  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000" />
+  <img alt="Version" src="https://img.shields.io/badge/version-0.3.0-blue.svg?cacheSeconds=2592000" />
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
@@ -16,7 +16,7 @@
 
 ## Prerequisites
 
-use-vega requires [vega]() and [vega-lite]()
+use-vega requires [vega](https://www.npmjs.com/package/vega) and [vega-lite](https://www.npmjs.com/package/vega-lite)
 
 ## Install
 
@@ -29,7 +29,7 @@ npm install use-vega
 ## Usage
 
 ```tsx
-import {useVega} from '@bbenzikry/use-vega'
+import {useVega} from 'use-vega'
 const spec = /* some vega / vega lite spec here*/;
 const SomeChart = () => {
 const { ref, noData, isLoading, error } = useVega(spec)
@@ -46,8 +46,8 @@ return (
 
 ## Notes and FAQ
 
-* The implementation is less performant than the one in [react-vega](https://github.com/vega/react-vega) as we recreate the view on change instead of doing a more in-depth comparison / update changesets.
-This will be changed in a future version dependent on traction.
+The implementation is less performant than the one in [react-vega](https://github.com/vega/react-vega) as we recreate the view on change instead of doing a more in-depth comparison / update changesets.  
+This will change in a future version dependent on traction.  
 Feel free to PR if this bothers you 😁
 
 ## Author

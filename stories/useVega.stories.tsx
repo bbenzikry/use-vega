@@ -149,6 +149,7 @@ export const WithVegaNonLite = () => {
 export const WithSignalHandlers = () => {
   const value = object('spec', vegaHoverSpec)
   const { noData, isLoading, ref, error } = useVega(
+    // @ts-ignore
     value,
     {
       grammer: GrammerType.VEGA,
