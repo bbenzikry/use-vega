@@ -1,5 +1,5 @@
 {
-  "version": "0.3.0",
+  "version": "0.4.0",
   "license": "MIT",
   "main": "dist/index.js",
   "repository": {
@@ -52,6 +52,7 @@
     "trailingComma": "es5"
   },
   "name": "use-vega",
+  "description": "Simple react hook for consuming vega/vega-lite specs",
   "author": "Beni Ben Zikry",
   "module": "dist/use-vega.esm.js",
   "size-limit": [
